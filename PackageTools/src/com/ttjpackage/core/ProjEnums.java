@@ -28,6 +28,7 @@ public enum ProjEnums {
 	public static ProjEnums toArcBatchStatus(String value) {
 		return codeMap.get(value);
 	}
+	
 
 	public static String getNameByCode(String value) { 
 		ProjEnums status = codeMap.get(value);

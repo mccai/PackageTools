@@ -26,7 +26,7 @@ import com.ttjpackage.core.ProjEnums;
  */
 public class PackageUtilsV2 {
 	
-	public static Map<String,String> projLinkMap = new HashMap<String, String>();
+	/*public static Map<String,String> projLinkMap = new HashMap<String, String>();
 	
 	static{
 		PckConfigInfo.doInit();
@@ -48,9 +48,9 @@ public class PackageUtilsV2 {
 		projLinkMap.put(ProjEnums.HRT_MANATE.getValue(), PckConfigInfo.hrtManageBasePath);
 		projLinkMap.put(ProjEnums.HRT_SERVICE.getValue(), PckConfigInfo.hrtServiceBasePath);
 	}
-	/***
+	*//***
 	 * @param args
-	 */
+	 *//*
 	public static void main(String[] args) {
 		try {
 			System.out.println("start packing------------------------------------");			
@@ -127,12 +127,12 @@ public class PackageUtilsV2 {
 		}		
 		return fullPckPath;
 	}
-	/****
+	*//****
 	 * 检查service类是否需要打包  true:需要打包 false：不需要打包
 	 * @param keyWord
 	 * @param filePath
 	 * @return
-	 */
+	 *//*
 	private boolean checkNeedPck(String keyWord,String filePath){
 		if(filePath.indexOf(PckConfigInfo.mallServiceKeyWord) != -1){ //商城service
 			if(keyWord.indexOf("mall") != -1){  //商城的项目
@@ -166,10 +166,10 @@ public class PackageUtilsV2 {
 		return true;
 	}
 	
-	/***
+	*//***
 	 * 返回需要打哪些项目的包
 	 * @return
-	 */
+	 *//*
 	private String[] getPckProjs() throws Exception{
 		
 		List<String> allProjs = new ArrayList<String>();
@@ -219,7 +219,6 @@ public class PackageUtilsV2 {
 			if(filePath.indexOf("*") > -1){
 				String dirPath = filePath.substring(0, filePath.indexOf("*"));
 				System.out.println("dirPath:"+dirPath);
-				String minPath = dirPath;
 				String[] fullDirPath = makeDirPath(dirPath, basePath);
 			    dealDir(fullDirPath[0], basePath, rootPath,fullDirPath[1]);
 			}else{
@@ -470,5 +469,5 @@ public class PackageUtilsV2 {
 			}
 		}
 
-	}
+	}*/
 }

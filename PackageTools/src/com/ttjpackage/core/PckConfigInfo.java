@@ -1,65 +1,77 @@
 package com.ttjpackage.core;
 
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 
 public class PckConfigInfo {
+	
 	public static String packageBasePath = ""; //打包路径
 	public static String packFilePath = ""; //打包文件路径
-	public static String ttjWebBasePath = ""; //淘淘金web项目工程目录
-	public static String ttjWxBasePath = ""; //淘淘金wx项目工程目录
-	public static String ttjAppBasePath = ""; //淘淘金APP项目工程目录
-	public static String ttjManageBasePath = ""; //淘淘金后台管理项目工程目录
-	public static String ttjReportBasePath = ""; //淘淘金报表项目工程目录
-	public static String ttjServiceBasePath = ""; //淘淘金service工程目录
-	public static String ttjReportServiceBasePath = ""; //报表service工程目录
 	
-	public static String mallWxBasePath = ""; //商城微信项目工程目录
-	public static String mallWebBasePath = ""; //商城web项目工程目录
-	public static String mallAppBasePath = ""; //商城app项目工程目录
-	public static String ttjDubooBasePath = "";  //ttj-duboo项目工程目录(实际是商城使用)
-	public static String mallManageBasePath = ""; //商城后台管理项目工程目录
-	public static String mallScheduleBasePath = ""; //商城定时任务工程目录
-	public static String mallServiceBasePath = ""; //商城service工程目录
-	
-	public static String hrtWxBasePath = "";//融易借WX目录
-	public static String hrtManageBasePath = ""; //融易借manage目录
-	public static String hrtServiceBasePath = ""; // 融易借service工程目录
-	
-	public static String ttjServiceKeyWord = "srtech-service";
-	public static String mallServiceKeyWord = "mall-service";
-	public static String reportServiceKeyWord = "report-service"; 
-	public static String hrtServiceKeyWord = "hrt-service";
+	public static Map<String, String> wsBasePath = new HashMap<String, String>(); // 项目工作空间
+	public static Map<String,List<String>> projRelatedMp = new HashMap<String,List<String>>();  //关联项目定义
+	public static Map<String,String> projWsMp = new HashMap<String,String>();//项目名-工作空间对照表
 	
 	public static void doInit(){
 		Properties pro = new Properties();
-		FileInputStream in;
+		FileInputStream in= null;
+		
+		FileInputStream in2= null;
+		Properties pro2 = new Properties();
+		
+		FileInputStream in3= null;
+		Properties pro3 = new Properties();
+		
 		try {
 			in = new FileInputStream("pckConfig.properties");
 			pro.load(in);
 			packageBasePath = pro.getProperty("packageBasePath");
 			packFilePath = pro.getProperty("packFilePath");
-			ttjWebBasePath = pro.getProperty("ttjWebBasePath");
-			ttjWxBasePath = pro.getProperty("ttjWxBasePath");
-			ttjAppBasePath = pro.getProperty("ttjAppBasePath");
-			ttjManageBasePath = pro.getProperty("ttjManageBasePath");
-			ttjReportBasePath = pro.getProperty("ttjReportBasePath");
-			mallWxBasePath = pro.getProperty("mallWxBasePath");
-			mallWebBasePath = pro.getProperty("mallWebBasePath");
-			mallAppBasePath = pro.getProperty("mallAppBasePath");
-			ttjDubooBasePath = pro.getProperty("ttjDubooBasePath");
-			mallManageBasePath = pro.getProperty("mallManageBasePath");
-			mallScheduleBasePath = pro.getProperty("mallScheduleBasePath");
-			ttjServiceBasePath = pro.getProperty("ttjServiceBasePath");
-			ttjReportServiceBasePath = pro.getProperty("ttjReportServiceBasePath");
-			mallServiceBasePath = pro.getProperty("mallServiceBasePath");
-			hrtWxBasePath =pro.getProperty("hrtWxBasePath");
-			hrtManageBasePath =pro.getProperty("hrtManageBasePath");
-			hrtServiceBasePath =pro.getProperty("hrtServiceBasePath");
+			
+			if(pro.entrySet() != null && pro.entrySet().size() > 0){
+				for(Entry<Object,Object> item : pro.entrySet()){
+					wsBasePath.put(item.getKey().toString(), item.getValue().toString());
+				}
+			}
+			
+			in2 = new FileInputStream("projRelatedConfig.properties");
+			pro2.load(in2);
+			if(pro2.entrySet() != null && pro2.entrySet().size() > 0){
+				for(Entry<Object,Object> item : pro2.entrySet()){
+					String key = item.getKey().toString();
+					String val = item.getValue().toString();
+					
+					String[]projs = val.split("#");
+					projRelatedMp.put(key, Arrays.asList(projs));
+				}
+			}
+			
+			in3 = new FileInputStream("projWsConfig.properties");
+			pro3.load(in3);
+			if(pro3.entrySet() != null && pro3.entrySet().size() > 0){
+				for(Entry<Object,Object> item : pro3.entrySet()){
+					projWsMp.put(item.getKey().toString(), item.getValue().toString());
+				}
+			}
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
+		}finally{
+			try {
+				in.close();
+				in2.close();
+				in3.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
 		}
 		
 	}
